@@ -4,10 +4,17 @@ plugins {
     kotlin("jvm")
 }
 
+repositories {
+    maven(url = "https://jetbrains.bintray.com/kotlin-native-dependencies")
+}
+
 dependencies {
+    compile(commonDep("org.jetbrains.kotlin:kotlin-native-shared")) {
+        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
+    }
+
     compile(gradleApi())
     compile(project(":kotlin-gradle-plugin-api"))
-    compile(project(":kotlin-native:kotlin-native-utils"))
 }
 
 val generateMppTargetContainerWithPresets by generator(
