@@ -5,10 +5,15 @@
 
 package org.jetbrains.kotlin.codegen
 
+import org.jetbrains.kotlin.codegen.intrinsics.IntrinsicMethods
+import org.jetbrains.kotlin.config.LanguageFeature
 import org.jetbrains.kotlin.descriptors.ValueParameterDescriptor
 import org.jetbrains.kotlin.psi.KtExpression
 import org.jetbrains.kotlin.resolve.calls.model.ResolvedCall
 import org.jetbrains.kotlin.resolve.jvm.AsmTypes.OBJECT_TYPE
+import org.jetbrains.kotlin.types.isNullable
+import org.jetbrains.kotlin.types.typeUtil.isTypeParameter
+import org.jetbrains.org.objectweb.asm.Label
 import org.jetbrains.org.objectweb.asm.Type
 
 enum class ValueKind {
@@ -37,6 +42,13 @@ interface CallGenerator {
                 callableMethod.genInvokeInstruction(codegen.v)
             } else {
                 (callableMethod as CallableMethod).genInvokeDefaultInstruction(codegen.v)
+            }
+
+            val isEnabledGeneratingNullChecksOnCallSite =
+                codegen.state.languageVersionSettings.supportsFeature(LanguageFeature.GenerateNullChecksForGenericTypeReturningFunctions)
+
+            if (isEnabledGeneratingNullChecksOnCallSite && resolvedCall != null) {
+                generateNullCheckOnCallSite(resolvedCall.resultingDescriptor ?: resolvedCall.candidateDescriptor, codegen.v)
             }
         }
 

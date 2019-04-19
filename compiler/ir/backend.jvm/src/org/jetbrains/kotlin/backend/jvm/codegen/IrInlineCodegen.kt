@@ -11,6 +11,7 @@ import org.jetbrains.kotlin.codegen.*
 import org.jetbrains.kotlin.codegen.inline.*
 import org.jetbrains.kotlin.codegen.state.GenerationState
 import org.jetbrains.kotlin.codegen.state.KotlinTypeMapper
+import org.jetbrains.kotlin.config.LanguageFeature
 import org.jetbrains.kotlin.descriptors.FunctionDescriptor
 import org.jetbrains.kotlin.descriptors.ValueParameterDescriptor
 import org.jetbrains.kotlin.ir.declarations.IrConstructor
@@ -92,6 +93,13 @@ class IrInlineCodegen(
     override fun genCall(callableMethod: Callable, callDefault: Boolean, codegen: ExpressionCodegen, expression: IrMemberAccessExpression) {
         val typeArguments = expression.descriptor.typeParameters.keysToMap { expression.getTypeArgumentOrDefault(it) }
         performInline(typeArguments, callDefault, codegen)
+
+        val isEnabledGeneratingNullChecksOnCallSite =
+            codegen.context.state.languageVersionSettings.supportsFeature(LanguageFeature.GenerateNullChecksForGenericTypeReturningFunctions)
+
+        if (isEnabledGeneratingNullChecksOnCallSite) {
+            generateNullCheckOnCallSite(expression.descriptor, codegen.mv)
+        }
     }
 
     private fun rememberClosure(irReference: IrFunctionReference, type: Type, parameter: ValueParameterDescriptor): LambdaInfo {

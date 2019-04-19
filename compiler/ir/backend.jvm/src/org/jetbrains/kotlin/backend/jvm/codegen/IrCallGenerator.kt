@@ -16,10 +16,9 @@
 
 package org.jetbrains.kotlin.backend.jvm.codegen
 
-import org.jetbrains.kotlin.codegen.Callable
-import org.jetbrains.kotlin.codegen.CallableMethod
-import org.jetbrains.kotlin.codegen.StackValue
-import org.jetbrains.kotlin.codegen.ValueKind
+import org.jetbrains.kotlin.codegen.*
+import org.jetbrains.kotlin.codegen.inline.v
+import org.jetbrains.kotlin.config.LanguageFeature
 import org.jetbrains.kotlin.descriptors.ValueParameterDescriptor
 import org.jetbrains.kotlin.ir.expressions.IrExpression
 import org.jetbrains.kotlin.ir.expressions.IrMemberAccessExpression
@@ -32,6 +31,13 @@ interface IrCallGenerator {
             callableMethod.genInvokeInstruction(codegen.mv)
         } else {
             (callableMethod as CallableMethod).genInvokeDefaultInstruction(codegen.mv)
+        }
+
+        val isEnabledGeneratingNullChecksOnCallSite =
+            codegen.context.state.languageVersionSettings.supportsFeature(LanguageFeature.GenerateNullChecksForGenericTypeReturningFunctions)
+
+        if (isEnabledGeneratingNullChecksOnCallSite) {
+            generateNullCheckOnCallSite(expression.descriptor, codegen.v)
         }
     }
 
