@@ -15,7 +15,7 @@ dependencies {
     // This dependency is necessary to keep the right dependency record inside of POM file:
     compile(projectRuntimeJar(":kotlin-compiler"))
 
-    compile(project(":kotlin-native:kotlin-native-utils"))
+    compile(commonDep("org.jetbrains.kotlin:kotlin-native-shared"))
 }
 
 sourceSets {

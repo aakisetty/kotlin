@@ -59,7 +59,6 @@ val projectsToShadow by extra(listOf(
         ":js:js.parser",
         ":js:js.serializer",
         ":js:js.translator",
-        ":kotlin-native:kotlin-native-utils",
         ":kotlin-native:kotlin-native-library-reader",
         ":compiler:light-classes",
         ":compiler:plugin-api",
@@ -120,6 +119,7 @@ dependencies {
     libraries(commonDep("org.jetbrains.kotlinx", "kotlinx-coroutines-jdk8"))
     libraries(commonDep("org.jetbrains", "markdown"))
     libraries(commonDep("io.javaslang", "javaslang"))
+    libraries(commonDep("org.jetbrains.kotlin", "kotlin-native-shared"))
 
     libraries(kotlinStdlib("jdk8"))
     libraries(project(":kotlin-reflect"))
