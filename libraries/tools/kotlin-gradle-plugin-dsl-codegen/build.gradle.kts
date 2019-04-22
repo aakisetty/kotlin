@@ -4,10 +4,6 @@ plugins {
     kotlin("jvm")
 }
 
-repositories {
-    maven(url = "https://jetbrains.bintray.com/kotlin-native-dependencies")
-}
-
 dependencies {
     compile(commonDep("org.jetbrains.kotlin:kotlin-native-shared")) {
         exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")

@@ -318,6 +318,7 @@ allprojects {
         maven(protobufRepo)
         maven(intellijRepo)
         maven(bootstrapKotlinRepo!!.replace("artifacts/content/maven/", "artifacts/content/internal/repo"))
+        maven(kotlinNativeRepo)
     }
 
     configureJvmProject(javaHome!!, jvmTarget!!)

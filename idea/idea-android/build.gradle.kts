@@ -38,7 +38,7 @@ dependencies {
     testCompile(project(":idea:idea-native")) { isTransitive = false }
     testCompile(project(":idea:idea-gradle-native")) { isTransitive = false }
     testRuntime(project(":kotlin-native:kotlin-native-library-reader")) { isTransitive = false }
-    testRuntime(project(":kotlin-native:kotlin-native-utils")) { isTransitive = false }
+    testRuntime(commonDep("org.jetbrains.kotlin:kotlin-native-shared")) { isTransitive = false }
 
     testCompile(intellijDep())
     testCompile(intellijPluginDep("properties"))

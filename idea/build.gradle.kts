@@ -71,7 +71,7 @@ dependencies {
     testCompile(commonDep("junit:junit"))
 
     testRuntime(project(":kotlin-native:kotlin-native-library-reader")) { isTransitive = false }
-    testRuntime(project(":kotlin-native:kotlin-native-utils")) { isTransitive = false }
+    testRuntime(commonDep("org.jetbrains.kotlin:kotlin-native-shared")) { isTransitive = false }
 
     testRuntime(commonDep("org.jetbrains", "markdown"))
     testRuntime(project(":plugins:kapt3-idea")) { isTransitive = false }

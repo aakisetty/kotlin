@@ -23,7 +23,6 @@ javadocJar()
 repositories {
     google()
     maven(url = "https://plugins.gradle.org/m2/")
-    maven(url = "https://jetbrains.bintray.com/kotlin-native-dependencies")
 }
 
 pill {
