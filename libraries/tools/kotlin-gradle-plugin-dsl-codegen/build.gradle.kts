@@ -6,7 +6,7 @@ plugins {
 
 dependencies {
     compile(commonDep("org.jetbrains.kotlin:kotlin-native-shared")) {
-        exclude(group = "org.jetbrains.kotlin", module = "kotlin-stdlib")
+        isTransitive = false
     }
 
     compile(gradleApi())
